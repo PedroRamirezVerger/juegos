@@ -1,0 +1,45 @@
+<!--
+ Copyright (c) 2014, 2019, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+<div class="oj-hybrid-applayout-page">
+  <div class="oj-applayout-fixed-top">
+      <!--
+       ** Oracle JET V6.1.0 hybrid mobile application header pattern.
+       ** Please see the Oracle JET Cookbook App Shell: Hybrid Mobile demos for
+       ** more information on how to use this pattern.
+    -->
+    <header role="banner" class="oj-hybrid-applayout-header">
+      <oj-module config="[[headerConfig]]"></oj-module>
+    </header>
+  </div>
+  <!-- This is where your main page content will be loaded -->
+  <div class="oj-applayout-content">
+    <div role="main" class="oj-hybrid-applayout-content">
+      <div class="oj-hybrid-padding">
+        <h1>Profile Content Area</h1>
+        <div>
+            <!--ko text: userName --><!--/ko--> VS <!--ko text: opponentUserName --><!--/ko-->
+        </div>
+        <div>
+          <oj-button id='b00' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+          <oj-button id='b01' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+          <oj-button id='b02' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+        </div>
+        <div>
+          <oj-button id='b10' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+          <oj-button id='b11' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+          <oj-button id='b12' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+        </div>
+        <div>
+          <oj-button id='b20' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+          <oj-button id='b21' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+          <oj-button id='b22' on-click='[[move]]'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</oj-button>
+        </div>
+        <div>
+           <oj-label>Turno de <!--ko text: currentPlayerUsername --><!--/ko--></oj-label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
