@@ -24,6 +24,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       };
 
       /**
+      aaaa
        * Optional ViewModel method invoked after the View is disconnected from the DOM.
        */
       self.disconnected = function() {
