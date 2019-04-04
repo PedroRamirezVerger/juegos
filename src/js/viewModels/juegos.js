@@ -5,7 +5,6 @@
  */
 /*
  * Your customer ViewModel code goes here
- prueba
  */
 define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojselectcombobox'],
  function(oj, ko, $, app, moduleUtils) {
