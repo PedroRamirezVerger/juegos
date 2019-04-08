@@ -6,7 +6,7 @@
 /*
  * Your profile ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojbutton'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojknockout', 'ojs/ojbutton'],
  function(oj, ko, $, app, moduleUtils) {
   
     function TableroViewModel() {
@@ -25,18 +25,23 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         self.opponentUserName=ko.observable(app.opponentUserName);
         self.currentPlayerUsername=ko.observable(app.currentPlayerUsername);
       }
-      self.move = function(event) {
-        var id=event.target.parentElement.id;
-        id=id.substring(1);
-        var coordinates = [];
-        coordinates.push(parseInt(id.charAt(0)));
-        coordinates.push(parseInt(id.charAt(1)));
-        app.move(coordinates);
-      }
+     
       self.connected = function() {
         var info =JSON.parse(sessionStorage.info);
         self.dealWithMessage(info);
       };
+    
+
+    self.button1Text = "Button 1";
+
+    
+    self.clickedButton = ko.observable("(None clicked yet)");
+    self.buttonClick = function(event){
+        self.clickedButton(event.currentTarget.id);
+        return true;
+    }
+  
+
 
       /**
        * Optional ViewModel method invoked after the View is disconnected from the DOM.
