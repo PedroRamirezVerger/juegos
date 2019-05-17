@@ -6,11 +6,12 @@
 /*
  * Your profile ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojknockout', 'ojs/ojbutton'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojlabel'],
  function(oj, ko, $, app, moduleUtils) {
   
     function TableroViewModel() {
       var self = this;
+      self.userName=ko.observable(app.userName);;
       self.dealWithMessage=function(data){
           console.log(data);
       }
@@ -23,12 +24,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.handleActivated=function(info){
         self.userName=ko.observable(app.userName);
         self.opponentUserName=ko.observable(app.opponentUserName);
-        self.currentPlayerUsername=ko.observable(app.currentPlayerUsername);
       }
      
       self.connected = function() {
         var info =JSON.parse(sessionStorage.info);
         self.dealWithMessage(info);
+        self.handleActivated(info);
       };
     
 
@@ -41,8 +42,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         return true;
     }
   
-
-
+    
       /**
        * Optional ViewModel method invoked after the View is disconnected from the DOM.
        */

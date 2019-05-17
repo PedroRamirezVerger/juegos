@@ -10,6 +10,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
   function(oj, ko, moduleUtils) {
      function ControllerViewModel() {
       var self = this;
+      self.userName=null;
       self.setUser= function(userName){
         self.userName=userName;
         conectarWebSocket();
@@ -37,6 +38,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
           var data=JSON.parse(event.data);
           if (data.type=="Match"){
             sessionStorage.info=JSON.stringify(event.data);
+            self.opponentUserName= (data.playerA.userName == self.userName ? data.playerB.userName : data.playerA.userName);
             self.router.go("tablero");
 
           }else if(data.type=="Movement"){
