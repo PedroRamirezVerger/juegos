@@ -11,11 +11,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
      function ControllerViewModel() {
       var self = this;
       self.userName=null;
+      
       self.setUser= function(userName){
         self.userName=userName;
         conectarWebSocket();
         self.router.go("juegos");
       }
+      
       function conectarWebSocket() {
         self.ws= new WebSocket("ws://localhost:8080/gamesws");
         self.move = function(coordinates) {
@@ -38,6 +40,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
           var data=JSON.parse(event.data);
           if (data.type=="Match"){
             sessionStorage.info=JSON.stringify(event.data);
+            self.email=data.playerA.email;
+            self.content=data.board.content;
             self.opponentUserName= (data.playerA.userName == self.userName ? data.playerB.userName : data.playerA.userName);
             self.router.go("tablero");
 

@@ -11,7 +11,49 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
   
     function TableroViewModel() {
       var self = this;
-      self.userName=ko.observable(app.userName);;
+      self.userName=ko.observable(app.userName);
+      self.email=ko.observable(app.email);
+      //self.palabras[]=
+
+      self.selectedGame=ko.observable("");
+      self.palabras=ko.observableArray([]);
+      self.pal=ko.observable(app.content);
+
+      function loadPalabras(){
+        if (app.userName!=null){
+          var recurso="http://localhost:8080/getPalabras";
+          $.ajax({
+            url : recurso,
+            type :"GET",
+
+            xhrfields : {
+              withCredentials : true
+            },
+            success : showPalabras
+          });
+        }
+        
+      }
+      function showPalabras(respuesta){
+        var palabras= respuesta.resultado.palabras;
+        var tempArray= [];
+        for (var i=0; i<palabras.length; i++){
+
+          tempArray.push(
+            {
+              'value' : palabras[i],
+              'label' : palabras[i]
+            }
+          );
+        }
+        self.palabras(tempArray);
+
+      }
+
+
+
+
+
       self.dealWithMessage=function(data){
           console.log(data);
       }

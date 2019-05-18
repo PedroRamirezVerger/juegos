@@ -20,7 +20,8 @@
         <h1>JUEGO DE LAS PALABRAS</h1>
         
         <div>
-          <oj-button id='palabra1' on-oj-action='[[buttonClick]]'>palabra 1</oj-button>
+          <oj-button id='palabra1' on-oj-action='[[buttonClick]]'><!--ko text: pal--><!--/ko--></oj-button>
+
           <oj-button id='palabra2' on-oj-action='[[buttonClick]]'>palabra 2</oj-button>
           <oj-button id='palabra3' on-oj-action='[[buttonClick]]'>palabra 3</oj-button>
         </div>
@@ -37,6 +38,7 @@
         <div>
           
           <p>Hello, <!--ko text: userName--><!--/ko--> !</p>
+          <p>Hello, <!--ko text: pal--><!--/ko--> !</p>
 
         </div>
       </div>
