@@ -70,25 +70,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.handleActivated= function(info){
         loadGames();
       }
-      function JuegosViewModel(){
-      var self= this;
-      self.selectedGame=ko.observable("");
-      self.games=ko.observableArray([]);
-
-      self.loadGames= function(){
-        if(app.userName!=null){
-          var recurso="http://localhost:8080/getGames";
-          $.ajax({
-            url : recurso,
-            type : "GET",
-            xhrfields: {
-              withCredentials : true
-            },
-            success : showGames
-          });
-        }
-      }
-    }
+    
       
       // Header Config
       self.headerConfig = ko.observable({'view':[], 'viewModel':null});

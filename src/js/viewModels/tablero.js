@@ -6,7 +6,7 @@
 /*
  * Your profile ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojlabel'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-element-utils', 'ojs/ojknockout', 'ojs/ojbutton', 'ojs/ojlabel','ojs/ojselectcombobox'],
  function(oj, ko, $, app, moduleUtils) {
   
     function TableroViewModel() {
@@ -17,6 +17,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       self.selectedGame=ko.observable("");
       self.palabras=ko.observableArray([]);
+      self.palabra1;
       self.pal=ko.observable(app.content);
 
       function loadPalabras(){
@@ -46,8 +47,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
             }
           );
         }
+        self.palabra1=palabras[0];
         self.palabras(tempArray);
-
+        
       }
 
 
@@ -66,6 +68,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.handleActivated=function(info){
         self.userName=ko.observable(app.userName);
         self.opponentUserName=ko.observable(app.opponentUserName);
+        loadPalabras();
       }
      
       self.connected = function() {

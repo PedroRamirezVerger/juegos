@@ -20,8 +20,8 @@
         <h1>JUEGO DE LAS PALABRAS</h1>
         
         <div>
-          <oj-button id='palabra1' on-oj-action='[[buttonClick]]'><!--ko text: pal--><!--/ko--></oj-button>
-
+          <oj-button id='palabra1' on-oj-action='[[buttonClick]]' value="{{palabra1}}"> <span><oj-bind-text value="[[palabra1]]"></oj-bind-text></span></oj-button>
+          
           <oj-button id='palabra2' on-oj-action='[[buttonClick]]'>palabra 2</oj-button>
           <oj-button id='palabra3' on-oj-action='[[buttonClick]]'>palabra 3</oj-button>
         </div>
