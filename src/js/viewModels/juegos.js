@@ -27,7 +27,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
             success : showGames
           });
         }
-        
       }
       function showGames(respuesta){
         var juegos= respuesta.resultado.games;

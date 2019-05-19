@@ -32,9 +32,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
             },
             success : showPalabras
           });
-        }
-        
+        } 
       }
+      //
       function showPalabras(respuesta){
         var palabras= respuesta.resultado.palabras;
         var tempArray= [];
