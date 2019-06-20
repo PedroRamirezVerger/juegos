@@ -42,6 +42,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         self.games(tempArray);
         self.selectedGame("");
       }
+      
       self.joinGame=function(){
         var recurso="http://localhost:8080/joinGame";
         var data ={

@@ -17,9 +17,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       self.selectedGame=ko.observable("");
       self.palabras=ko.observableArray([]);
-      self.palabra1;
-      self.pal=ko.observable(app.content);
-
+      
+      
+      self.pal =ko.observable("");
       function loadPalabras(){
         if (app.userName!=null){
           var recurso="http://localhost:8080/getPalabras";
@@ -37,23 +37,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       //
       function showPalabras(respuesta){
         var palabras= respuesta.resultado.palabras;
-        var tempArray= [];
-        for (var i=0; i<palabras.length; i++){
-
-          tempArray.push(
-            {
-              'value' : palabras[i],
-              'label' : palabras[i]
-            }
-          );
-        }
-        self.palabra1=palabras[0];
-        self.palabras(tempArray);
+        pal="patata";
+        
+        
+        
+       
         
       }
 
 
-
+      self.onmessage=function(event){
+        var data=JSON.parse(event.data);
+       
+      }
 
 
       self.dealWithMessage=function(data){
@@ -68,7 +64,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.handleActivated=function(info){
         self.userName=ko.observable(app.userName);
         self.opponentUserName=ko.observable(app.opponentUserName);
-        loadPalabras();
+        self.contenido=app.content;
+        self.tablero1=self.contenido.tablero[1];
+        self.pal=self.tablero1.tablero1[0];
+        
       }
      
       self.connected = function() {

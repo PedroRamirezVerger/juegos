@@ -41,7 +41,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
           if (data.type=="Match"){
             sessionStorage.info=JSON.stringify(event.data);
             self.email=data.playerA.email;
-            self.content=data.board.content;
+            self.content=JSON.parse(data.board.content);
             self.opponentUserName= (data.playerA.userName == self.userName ? data.playerB.userName : data.playerA.userName);
             self.router.go("tablero");
 
