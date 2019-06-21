@@ -29,6 +29,16 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.palabra8 =ko.observable("");
       self.palabra9 =ko.observable("");
 
+      self.palabra11 =ko.observable("");
+      self.palabra21 =ko.observable("");
+      self.palabra31 =ko.observable("");
+      self.palabra41 =ko.observable("");
+      self.palabra51 =ko.observable("");
+      self.palabra61 =ko.observable("");
+      self.palabra71 =ko.observable("");
+      self.palabra81 =ko.observable("");
+      self.palabra91 =ko.observable("");
+
       function loadPalabras(){
         if (app.userName!=null){
           var recurso="http://localhost:8080/getPalabras";
@@ -76,7 +86,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
 
       }
-      self.pruebaciones=function(){
+      self.asignarPalabrasTablero1=function(){
           self.contenido=app.content;
           self.tablero1=self.contenido.tablero[1];
           self.palabra1=self.tablero1.tablero1[0];
@@ -90,12 +100,27 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           self.palabra9=self.tablero1.tablero1[8];
 
       }
+      self.asignarPalabrasTablero2=function(){
+          self.contenido=app.content;
+          self.tablero2=self.contenido.tablero[2];
+          $('#palabra11').html(""+self.tablero2.tablero2[0]);
+          $('#palabra21').html(""+self.tablero2.tablero2[1]);
+          $('#palabra31').html(""+self.tablero2.tablero2[2]);
+          $('#palabra41').html(""+self.tablero2.tablero2[3]);
+          $('#palabra51').html(""+self.tablero2.tablero2[4]);
+          $('#palabra61').html(""+self.tablero2.tablero2[5]);
+          $('#palabra71').html(""+self.tablero2.tablero2[6]);
+          $('#palabra81').html(""+self.tablero2.tablero2[7]);
+          $('#palabra91').html(""+self.tablero2.tablero2[8]);
+      }
 
       self.connected = function() {
         var info =JSON.parse(sessionStorage.info);
         self.dealWithMessage(info);
         self.handleActivated(info);
-        self.pruebaciones();
+
+        self.asignarPalabrasTablero1();
+        self.asignarPalabrasTablero2();
       };
 
 
@@ -107,6 +132,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         self.clickedButton(event.currentTarget.id);
         return true;
     }
+
 
 
       /**
