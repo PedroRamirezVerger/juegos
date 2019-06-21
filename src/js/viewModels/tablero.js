@@ -86,7 +86,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
 
       }
+
+
+
       self.asignarPalabrasTablero1=function(){
+
+
+          // cambiar y meterlo dentro de un for
           self.contenido=app.content;
           self.tablero1=self.contenido.tablero[1];
           self.palabra1=self.tablero1.tablero1[0];
@@ -99,9 +105,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           self.palabra8=self.tablero1.tablero1[7];
           self.palabra9=self.tablero1.tablero1[8];
 
-      }
-      self.asignarPalabrasTablero2=function(){
-          self.contenido=app.content;
+
           self.tablero2=self.contenido.tablero[2];
           $('#palabra11').html(""+self.tablero2.tablero2[0]);
           $('#palabra21').html(""+self.tablero2.tablero2[1]);
@@ -114,14 +118,69 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           $('#palabra91').html(""+self.tablero2.tablero2[8]);
       }
 
+      self.asignarPalabrasTablero2=function(){
+
+
+          // cambiar y meterlo dentro de un for
+          self.contenido=app.content;
+          self.tablero2=self.contenido.tablero[2];
+          self.palabra1=self.tablero2.tablero2[0];
+          self.palabra2=self.tablero2.tablero2[1];
+          self.palabra3=self.tablero2.tablero2[2];
+          self.palabra4=self.tablero2.tablero2[3];
+          self.palabra5=self.tablero2.tablero2[4];
+          self.palabra6=self.tablero2.tablero2[5];
+          self.palabra7=self.tablero2.tablero2[6];
+          self.palabra8=self.tablero2.tablero2[7];
+          self.palabra9=self.tablero2.tablero2[8];
+
+
+          self.tablero1=self.contenido.tablero[1];
+          $('#palabra11').html(""+self.tablero1.tablero1[0]);
+          $('#palabra21').html(""+self.tablero1.tablero1[1]);
+          $('#palabra31').html(""+self.tablero1.tablero1[2]);
+          $('#palabra41').html(""+self.tablero1.tablero1[3]);
+          $('#palabra51').html(""+self.tablero1.tablero1[4]);
+          $('#palabra61').html(""+self.tablero1.tablero1[5]);
+          $('#palabra71').html(""+self.tablero1.tablero1[6]);
+          $('#palabra81').html(""+self.tablero1.tablero1[7]);
+          $('#palabra91').html(""+self.tablero1.tablero1[8]);
+      }
+        function vaciarTablero(){
+
+          self.palabra1="👻";
+          self.palabra2="👻";
+          self.palabra3="👻";
+          self.palabra4="👻";
+          self.palabra5="👻";
+          self.palabra6="👻";
+          self.palabra7="👻";
+          self.palabra8="👻";
+          self.palabra9="👻";
+
+
+      }
+      self.asignarTableros=function(info){
+
+          if(app.jugadorA==app.userName){
+            self.asignarPalabrasTablero1();
+        }else {
+            self.asignarPalabrasTablero2();
+        }
+      }
+
       self.connected = function() {
         var info =JSON.parse(sessionStorage.info);
         self.dealWithMessage(info);
         self.handleActivated(info);
 
-        self.asignarPalabrasTablero1();
-        self.asignarPalabrasTablero2();
+        self.asignarTableros();
+        setTimeout(vaciarTablero,3000); // 3000ms = 3s
+
+
+
       };
+
 
 
     self.button1Text = "Button 1";
