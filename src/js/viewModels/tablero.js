@@ -13,32 +13,16 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       var self = this;
       self.userName=ko.observable(app.userName);
       self.email=ko.observable(app.email);
-
-      //self.palabras[]=
-
       self.selectedGame=ko.observable("");
-      self.palabras=ko.observableArray([]);
+      self.palabrasOrden=ko.observableArray([]);
+      self.palabrasJugador=ko.observableArray([]);
+      self.palabrasContrincante=ko.observableArray([]);
+      self.contadorJugadorA=ko.observable("0");
+      self.contadorJugadorB=ko.observable("0");
 
 
-      self.palabra1 =ko.observable("");
-      self.palabra2 =ko.observable("");
-      self.palabra3 =ko.observable("");
-      self.palabra4 =ko.observable("");
-      self.palabra5 =ko.observable("");
-      self.palabra6 =ko.observable("");
-      self.palabra7 =ko.observable("");
-      self.palabra8 =ko.observable("");
-      self.palabra9 =ko.observable("");
 
-      self.palabra11 =ko.observable("");
-      self.palabra21 =ko.observable("");
-      self.palabra31 =ko.observable("");
-      self.palabra41 =ko.observable("");
-      self.palabra51 =ko.observable("");
-      self.palabra61 =ko.observable("");
-      self.palabra71 =ko.observable("");
-      self.palabra81 =ko.observable("");
-      self.palabra91 =ko.observable("");
+
 
       function loadPalabras(){
         if (app.userName!=null){
@@ -65,10 +49,24 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       }
 
+      self.desbloquearBotones=function(){
+
+        $('#palabra1').removeAttr("disabled");
+        $('#palabra2').removeAttr("disabled");
+        $('#palabra3').removeAttr("disabled");
+        $('#palabra4').removeAttr("disabled");
+        $('#palabra5').removeAttr("disabled");
+        $('#palabra6').removeAttr("disabled");
+        $('#palabra7').removeAttr("disabled");
+        $('#palabra8').removeAttr("disabled");
+        $('#palabra9').removeAttr("disabled");
+
+      }
+
 
       self.onmessage=function(event){
         var data=JSON.parse(event.data);
-        
+
       }
 
 
@@ -88,106 +86,121 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       }
 
+      self.valorBotones=function(){
+
+          for (var i = 0; i < 9; i++) {
+              $('#b'+i).html(""+self.palabrasJugador[i]);
+          }
+
+
+      }
 
 
       self.asignarPalabrasTablero1=function(){
-
-
           // cambiar y meterlo dentro de un for
           self.contenido=app.content;
           self.tablero1=self.contenido.tablero[1];
-          self.palabra1=self.tablero1.tablero1[0];
-          self.palabra2=self.tablero1.tablero1[1];
-          self.palabra3=self.tablero1.tablero1[2];
-          self.palabra4=self.tablero1.tablero1[3];
-          self.palabra5=self.tablero1.tablero1[4];
-          self.palabra6=self.tablero1.tablero1[5];
-          self.palabra7=self.tablero1.tablero1[6];
-          self.palabra8=self.tablero1.tablero1[7];
-          self.palabra9=self.tablero1.tablero1[8];
+          for (var i = 0; i < 9; i++) {
+              self.palabrasJugador[i]=self.tablero1.tablero1[i];
+          }
+
 
 
           self.tablero2=self.contenido.tablero[2];
-          $('#palabra11').html(""+self.tablero2.tablero2[0]);
-          $('#palabra21').html(""+self.tablero2.tablero2[1]);
-          $('#palabra31').html(""+self.tablero2.tablero2[2]);
-          $('#palabra41').html(""+self.tablero2.tablero2[3]);
-          $('#palabra51').html(""+self.tablero2.tablero2[4]);
-          $('#palabra61').html(""+self.tablero2.tablero2[5]);
-          $('#palabra71').html(""+self.tablero2.tablero2[6]);
-          $('#palabra81').html(""+self.tablero2.tablero2[7]);
-          $('#palabra91').html(""+self.tablero2.tablero2[8]);
+
+          for (var i = 0; i < 9; i++) {
+              $('#b'+i).html(""+self.tablero1.tablero1[i]);
+          }
+
+          for (var i = 0; i < 9; i++) {
+              $('#palabra'+i).html(""+self.tablero2.tablero2[i]);
+          }
+
       }
 
       self.asignarPalabrasTablero2=function(){
-
-
           // cambiar y meterlo dentro de un for
           self.contenido=app.content;
           self.tablero2=self.contenido.tablero[2];
-          self.palabra1=self.tablero2.tablero2[0];
-          self.palabra2=self.tablero2.tablero2[1];
-          self.palabra3=self.tablero2.tablero2[2];
-          self.palabra4=self.tablero2.tablero2[3];
-          self.palabra5=self.tablero2.tablero2[4];
-          self.palabra6=self.tablero2.tablero2[5];
-          self.palabra7=self.tablero2.tablero2[6];
-          self.palabra8=self.tablero2.tablero2[7];
-          self.palabra9=self.tablero2.tablero2[8];
+
+          for (var i = 0; i < 9; i++) {
+              self.palabrasContrincante[i]=self.tablero2.tablero2[i];
+          }
 
 
           self.tablero1=self.contenido.tablero[1];
-          $('#palabra11').html(""+self.tablero1.tablero1[0]);
-          $('#palabra21').html(""+self.tablero1.tablero1[1]);
-          $('#palabra31').html(""+self.tablero1.tablero1[2]);
-          $('#palabra41').html(""+self.tablero1.tablero1[3]);
-          $('#palabra51').html(""+self.tablero1.tablero1[4]);
-          $('#palabra61').html(""+self.tablero1.tablero1[5]);
-          $('#palabra71').html(""+self.tablero1.tablero1[6]);
-          $('#palabra81').html(""+self.tablero1.tablero1[7]);
-          $('#palabra91').html(""+self.tablero1.tablero1[8]);
+
+          for (var i = 0; i < 9; i++) {
+              $('#b'+i).html(""+self.tablero2.tablero2[i]);
+          }
+          for (var i = 0; i < 9; i++) {
+              $('#palabra'+i).html(""+self.tablero1.tablero1[i]);
+          }
+
       }
         function vaciarTablero(){
+            // con ids de botones
+            for (var i = 0; i < 9; i++) {
+                $('#b'+i).html("👻");
+            }
+      }
 
-          self.palabra1="👻";
-          self.palabra2="👻";
-          self.palabra3="👻";
-          self.palabra4="👻";
-          self.palabra5="👻";
-          self.palabra6="👻";
-          self.palabra7="👻";
-          self.palabra8="👻";
-          self.palabra9="👻";
+      self.palabrasOrden=function(){
 
+        self.contenido=app.content;
+        self.palabrasOrden=self.contenido.tablero[0];
+          // falta truncar las palabras nos vienen duplicadas
+      }
+
+      self.comprobarTableroJugador=function(){
+          self.contenido=app.content;
+          if(app.jugadorA==app.userName){
+              self.contadorJugadorA=self.contenido.contadorPlayerA;
+              self.contadorJugadorB=self.contenido.contadorPlayerB;
+                if(contadorJugadorA==0){
+                    self.vaciarTablero();
+                }
+                if(contadorJugadorB==0){
+                    // quitar el rojo de los botones.
+                }
+
+                for (var i = 0; i < contadorJugadorA; i++) {
+
+                }
+          }else{
+              self.contadorJugadorA=self.contenido.contadorPlayerB;
+              self.contadorJugadorB=self.contenido.contadorPlayerA;
+
+          }
 
       }
+
+
+      self.comprobarTableroContrincante=function(){
+
+      }
+
       self.asignarTableros=function(info){
 
           if(app.jugadorA==app.userName){
+
             self.asignarPalabrasTablero1();
+            self.valorBotones();
         }else {
+
             self.asignarPalabrasTablero2();
+            self.valorBotones();
         }
       }
-      self.desbloquearBotones=function(info){
 
-        $('#palabra1').removeAttr("disabled");
-        $('#palabra2').removeAttr("disabled");
-        $('#palabra3').removeAttr("disabled");
-        $('#palabra4').removeAttr("disabled");
-        $('#palabra5').removeAttr("disabled");
-        $('#palabra6').removeAttr("disabled");
-        $('#palabra7').removeAttr("disabled");
-        $('#palabra8').removeAttr("disabled");
-        $('#palabra9').removeAttr("disabled");
 
-      }
+
+
 
       self.connected = function() {
         var info =JSON.parse(sessionStorage.info);
         self.dealWithMessage(info);
         self.handleActivated(info);
-
         self.asignarTableros();
 
 

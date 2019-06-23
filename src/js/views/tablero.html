@@ -20,47 +20,50 @@
         <h1>JUEGO DE LAS PALABRAS</h1>
 
         <div>
-            <oj-button id='palabra1' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra1]]"></oj-bind-text></span></oj-button>
-            <oj-button id='palabra2' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra2]]"></oj-bind-text></span></oj-button>
-            <oj-button id='palabra3' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra3]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b0' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton1]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b1' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton2]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b2' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton3]]"></oj-bind-text></span></oj-button>
         </div>
         <div>
 
-            <oj-button id='palabra4' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra4]]"></oj-bind-text></span></oj-button>
-            <oj-button id='palabra5' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra5]]"></oj-bind-text></span></oj-button>
-            <oj-button id='palabra6' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra6]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b3' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton4]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b4' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton5]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b5' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton6]]"></oj-bind-text></span></oj-button>
           </div>
         <div>
-            <oj-button id='palabra7' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra7]]"></oj-bind-text></span></oj-button>
-            <oj-button id='palabra8' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra8]]"></oj-bind-text></span></oj-button>
-            <oj-button id='palabra9' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[palabra9]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b6' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton7]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b7' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton8]]"></oj-bind-text></span></oj-button>
+            <oj-button id='b8' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled> <span><oj-bind-text value="[[valorBoton9]]"></oj-bind-text></span></oj-button>
           </div>
+         <p>Puntuacion, <!--ko text: contadorJugadorA--><!--/ko--> !</p>
+         <p>Puntuacion Contrincante, <!--ko text: contadorJugadorB--><!--/ko--> !</p>
         <div>
 
             <div class="oj-hybrid-padding">
-              <h1>tablero2</h1>
+
+              <p>Contrincante, <!--ko text: opponentUserName--><!--/ko--> !</p>
 
               <table border="1" width="450px">
                   <tbody>
                       <tr>
-                          <td class= "square" style= "text-align:center;" height=50px id="palabra11">palabra11</td>
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra21">palabra21</td>
-                            <td class= "square" style= "text-align:center;"  height=50px id="palabra31">palabra31</td>
+                          <td class= "square" style= "text-align:center;" height=50px id="palabra0">palabra11</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra1">palabra21</td>
+                            <td class= "square" style= "text-align:center;"  height=50px id="palabra2">palabra31</td>
                       </tr>
 
                       <tr>
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra41">palabra41</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra3">palabra41</td>
 
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra51">palabra51</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra4">palabra51</td>
 
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra61">palabra61</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra5">palabra61</td>
                        </tr>
                        <tr>
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra71">palabra71</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra6">palabra71</td>
 
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra81">palabra81</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra7">palabra81</td>
 
-                           <td class= "square" style= "text-align:center;" height=50px id="palabra91">palabra91</td>
+                           <td class= "square" style= "text-align:center;" height=50px id="palabra8">palabra91</td>
                        </tr>
 
                   </tbody>

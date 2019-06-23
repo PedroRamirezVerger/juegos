@@ -17,7 +17,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
         conectarWebSocket();
         self.router.go("juegos");
       }
-
+      self.move = function(coordinates) {
+      var p = {
+       type : "Movement",
+       coordinates : coordinates
+      };
+      self.ws.send(JSON.stringify(p));
+      };
       function conectarWebSocket() {
         self.ws= new WebSocket("ws://localhost:8080/gamesws");
         self.move = function(coordinates) {
@@ -50,7 +56,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
           }else if(data.type=="Movement"){
             self.router.currentState().dealWithMessage(data);
         }else if (data.type=="finEspera") {
-            self.finEspera=true;
+            self.router.currentState().desbloquearBotones();
 
         }
         }
