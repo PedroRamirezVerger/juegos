@@ -49,7 +49,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
 
           }else if(data.type=="Movement"){
             self.router.currentState().dealWithMessage(data);
-          }
+        }else if (data.type=="finEspera") {
+            self.finEspera=true;
+
+        }
         }
         self.ws.onerror=function(event){
           console.log(data);

@@ -13,6 +13,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       var self = this;
       self.userName=ko.observable(app.userName);
       self.email=ko.observable(app.email);
+
       //self.palabras[]=
 
       self.selectedGame=ko.observable("");
@@ -67,7 +68,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       self.onmessage=function(event){
         var data=JSON.parse(event.data);
-
+        
       }
 
 
@@ -168,6 +169,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
             self.asignarPalabrasTablero2();
         }
       }
+      self.desbloquearBotones=function(info){
+
+        $('#palabra1').removeAttr("disabled");
+        $('#palabra2').removeAttr("disabled");
+        $('#palabra3').removeAttr("disabled");
+        $('#palabra4').removeAttr("disabled");
+        $('#palabra5').removeAttr("disabled");
+        $('#palabra6').removeAttr("disabled");
+        $('#palabra7').removeAttr("disabled");
+        $('#palabra8').removeAttr("disabled");
+        $('#palabra9').removeAttr("disabled");
+
+      }
 
       self.connected = function() {
         var info =JSON.parse(sessionStorage.info);
@@ -175,8 +189,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         self.handleActivated(info);
 
         self.asignarTableros();
-        setTimeout(vaciarTablero,3000); // 3000ms = 3s
-
 
 
       };
