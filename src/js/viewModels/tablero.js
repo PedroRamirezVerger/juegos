@@ -12,6 +12,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     function TableroViewModel() {
       var self = this;
       self.userName=ko.observable(app.userName);
+      self.opponentUserName=ko.observable(app.opponentUserName);
       self.email=ko.observable(app.email);
       self.selectedGame=ko.observable("");
       self.palabrasOrden=ko.observableArray([]);
@@ -71,7 +72,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
 
       self.dealWithMessage=function(data){
-          console.log(data);
+          console.log('data');
       }
       // Header Config
       self.headerConfig = ko.observable({'view':[], 'viewModel':null});
@@ -88,10 +89,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       self.valorBotones=function(){
 
-          for (var i = 0; i < 9; i++) {
-              $('#b'+i).html(""+self.palabrasJugador[i]);
+        for (var i = 0; i < 3; i++) {
+             for (var j=0; j <3; j++) {
+              $('#valorBoton'+i+j).html(""+self.palabrasJugador[i+j]);
+            }  
           }
-
 
       }
 
@@ -107,11 +109,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
 
           self.tablero2=self.contenido.tablero[2];
+          var contador=0;
+          for (var i = 0; i < 3; i++) {
+            for (var j=0; j <3; j++) {
+              $('#'+i+j).html(""+self.tablero1.tablero1[contador]);
+              contador++;
+            }
 
-          for (var i = 0; i < 9; i++) {
-              $('#b'+i).html(""+self.tablero1.tablero1[i]);
           }
-
           for (var i = 0; i < 9; i++) {
               $('#palabra'+i).html(""+self.tablero2.tablero2[i]);
           }
@@ -121,27 +126,33 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.asignarPalabrasTablero2=function(){
           // cambiar y meterlo dentro de un for
           self.contenido=app.content;
-          self.tablero2=self.contenido.tablero[2];
+          self.tablero1=self.contenido.tablero[2];
 
           for (var i = 0; i < 9; i++) {
-              self.palabrasContrincante[i]=self.tablero2.tablero2[i];
+              self.palabrasJugador[i]=self.tablero1.tablero2[i];
           }
 
 
-          self.tablero1=self.contenido.tablero[1];
-
-          for (var i = 0; i < 9; i++) {
-              $('#b'+i).html(""+self.tablero2.tablero2[i]);
+          self.tablero2=self.contenido.tablero[1];
+          var contador=0;
+          for (var i = 0; i < 3; i++) {
+            for (var j=0; j <3; j++) {
+              $('#'+i+j).html(""+self.tablero1.tablero2[contador]);
+              contador++;
+            }
           }
+           
           for (var i = 0; i < 9; i++) {
-              $('#palabra'+i).html(""+self.tablero1.tablero1[i]);
+              $('#palabra'+i).html(""+self.tablero2.tablero1[i]);
           }
 
       }
         function vaciarTablero(){
             // con ids de botones
-            for (var i = 0; i < 9; i++) {
-                $('#b'+i).html("👻");
+            for (var i = 0; i < 3; i++) {
+              for (var j=0; j <3; j++) {
+                $('#'+i+j).html("👻");
+              }  
             }
       }
 
@@ -165,7 +176,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
                 }
 
                 for (var i = 0; i < contadorJugadorA; i++) {
-
+                   // var boton=self.contenido.
                 }
           }else{
               self.contadorJugadorA=self.contenido.contadorPlayerB;
@@ -174,7 +185,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           }
 
       }
-
+    self.traducirContador=function(){
+       self.contenido=app.content;
+      // self.contador=self.contenido.
+    }
 
       self.comprobarTableroContrincante=function(){
 
@@ -206,17 +220,17 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
       };
 
-
-
-    self.button1Text = "Button 1";
-
-
     self.clickedButton = ko.observable("(None clicked yet)");
     self.buttonClick = function(event){
-        self.clickedButton(event.currentTarget.id);
+        self.clickedButton=event.currentTarget.id;
+        console.log(self.clickedButton);
+        self.coordenada1= self.clickedButton.charAt(0);
+        self.coordenada2=self.clickedButton.charAt(1);
+        self.coordenadas=[self.coordenada1, self.coordenada2];
+        app.move(self.coordenadas);
+
         return true;
     }
-
 
 
       /**

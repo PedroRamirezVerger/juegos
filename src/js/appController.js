@@ -11,6 +11,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
      function ControllerViewModel() {
       var self = this;
       self.userName=null;
+      self.opponentUserName=null;
 
       self.setUser= function(userName){
         self.userName=userName;
@@ -26,13 +27,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
       };
       function conectarWebSocket() {
         self.ws= new WebSocket("ws://localhost:8080/gamesws");
-        self.move = function(coordinates) {
-          var p = {
-            type : "Movement",
-            coordinates : coordinates
-          };
-          self.ws.send(JSON.stringify(p));
-        };
+       
         self.ws.onopen=function(){
           console.log("WebSocket conectado");
 
@@ -50,15 +45,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
             self.content=JSON.parse(data.board.content);
             self.jugadorA=data.playerA;
             self.jugadorB=data.playerB;
-            self.opponentUserName= (data.playerA.userName == self.userName ? data.playerB.userName : data.playerA.userName);
+            self.opponentUserName= (data.playerA == self.userName ? data.playerB : data.playerA);
             self.router.go("tablero");
-
+            
           }else if(data.type=="Movement"){
-            self.router.currentState().dealWithMessage(data);
-        }else if (data.type=="finEspera") {
-            self.router.currentState().desbloquearBotones();
-
-        }
+           
+            //self.router.currentState().dealWithMessage(data);
+          }else if (data.type=="finEspera") {
+           //self.router.go("tablero").dealWithMessage(data);
+          }else if(data.type=="actualizarTablero"){
+             self.contadorPlayerA=data.contadorPlayerA;
+             self.contadorPlayerB=data.contadorPlayerB;
+          }
         }
         self.ws.onerror=function(event){
           console.log(data);
