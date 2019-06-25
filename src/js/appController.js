@@ -8,7 +8,7 @@
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout', 'ojs/ojmodule-element', 'ojs/ojrouter', 'ojs/ojarraytabledatasource', 'ojs/ojoffcanvas', 'ojs/ojbutton'],
   function(oj, ko, moduleUtils) {
-     function ControllerViewModel() {
+    function ControllerViewModel() {
       var self = this;
       self.userName=null;
       self.opponentUserName=null;
@@ -50,12 +50,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
             
           }else if(data.type=="Movement"){
            
-            //self.router.currentState().dealWithMessage(data);
           }else if (data.type=="finEspera") {
-           //self.router.go("tablero").dealWithMessage(data);
+          //Metodos de tablero.js
+          //desbloquearBotones()
+          //vaciarTablero()
           }else if(data.type=="actualizarTablero"){
-             self.contadorPlayerA=data.contadorPlayerA;
-             self.contadorPlayerB=data.contadorPlayerB;
+            self.contadorPlayerA=data.contadorPlayerA;
+            self.contadorPlayerB=data.contadorPlayerB;
+            //Metodos de tablero.js
+             //comprobarTableros();
           }
         }
         self.ws.onerror=function(event){
