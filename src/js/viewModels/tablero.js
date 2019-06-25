@@ -16,35 +16,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     self.email=ko.observable(app.email);
     self.selectedGame=ko.observable("");
     self.palabrasOrden=ko.observableArray([]);
+    self.palabraActual=ko.observable("");
     self.palabrasJugador=ko.observableArray([]);
     self.palabrasContrincante=ko.observableArray([]);
     self.contadorJugador=ko.observable("0");
     self.contadorContrincante=ko.observable("0");
-
-    function loadPalabras(){
-      if (app.userName!=null){
-        var recurso="http://localhost:8080/getPalabras";
-        $.ajax({
-          url : recurso,
-          type :"GET",
-
-          xhrfields : {
-            withCredentials : true
-          },
-          success : showPalabras
-        });
-      }
-    }
-    //
-    function showPalabras(respuesta){
-      var palabras= respuesta.resultado.palabras;
-
-
-
-
-
-
-    }
 
     self.desbloquearBotones=function(){
       for (var i = 0; i <3 ; i--) {
@@ -57,6 +33,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
     self.onmessage=function(event){
       var data=JSON.parse(event.data);
+      if (data.type=="finEspera") {
+          //Metodos de tablero.js
+        //self.desbloquearBotones();
+        self.vaciarTablero();
+      }
 
     }
 
@@ -91,6 +72,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     self.asignarPalabrasTablero1=function(){
       self.contenido=app.content;
       self.tablero1=self.contenido.tablero[1];
+
+      //self.pintarCelda();
       for (var i = 0; i < 9; i++) {
           self.palabrasJugador[i]=self.tablero1.tablero1[i];
       }
@@ -106,13 +89,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         }
 
       }
+      
       for (var i = 0; i < 9; i++) {
           $('#palabra'+i).html(""+self.tablero2.tablero2[i]);
-
-
-          //$('#palabra'+i).style.color="red";
-          //$('#palabra'+i).setAttr(style.color = '#FF0000');
-          $('#palabra'+i).currentColor = ko.observable(["red"]);
       }
 
     }
@@ -139,6 +118,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         for (var i = 0; i < 9; i++) {
             $('#palabra'+i).html(""+self.tablero2.tablero1[i]);
 
+
         }
 
     }
@@ -150,11 +130,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           }
     }
 
-    self.palabrasOrden=function(){
-
-      self.contenido=app.content;
-      self.palabrasOrden=self.contenido.tablero[0];
-    }
 
     self.comprobarTableros=function(){
       self.contenido=app.content;
@@ -187,7 +162,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     for (var i = 0; i < 3; i++) {
       for (var j = 0; j < 3; j++) {
         if (self.palabrasOrden[contador]==self.palabrasJugador[c]) {
-           $('#'+i+j).html(""+self.palabrasJugador[c]);
+          $('#'+i+j).html(""+self.palabrasJugador[c]);
+
+          
         }
         c++;
       }
@@ -197,9 +174,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
   self.pintarCelda=function(contador){
     var c=0;
+   
     for (var i = 0; i < 9; i++) {
         if (self.palabrasOrden[contador]==self.palabrasContrincante[c]) {
-           $('#palabra'+i).style.backgroundColor="#66ff33" ;
+          document.getElementById('palabra'+i).style.backgroundColor="#FF0000"; 
         }
         c++;
     }
@@ -207,15 +185,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
   }
 
   self.asignarTableros=function(info){
-
+    self.rellenarPalabrasOrden();
     if(app.jugadorA==app.userName){
       self.asignarPalabrasTablero1();   
     }else {
         self.asignarPalabrasTablero2();
     }
-     self.valorBotones();
+   //self.palabraActual=self.palabrasOrden[0];//////////////////////
+    self.valorBotones();
   }
-
+  self.rellenarPalabrasOrden=function(){
+    self.contenido=app.content;
+    self.palabrasOrden=self.contenido.tablero[0];
+  }
     self.connected = function() {
       var info =JSON.parse(sessionStorage.info);
       self.dealWithMessage(info);
