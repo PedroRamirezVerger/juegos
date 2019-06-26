@@ -21,7 +21,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
       self.move = function(coordinates) {
       var p = {
        type : "Movement",
-       coordinates : coordinates
+       coordinates : coordinates, 
+       uuid : sessionStorage.uuid
       };
       self.ws.send(JSON.stringify(p));
       };
@@ -39,6 +40,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
         self.ws.onmessage=function(event){
           console.log(event.data);
           var data=JSON.parse(event.data);
+          if(data.type=="uuid"){
+            sessionStorage.uuid=JSON.stringify(data.uuid);
+          }
           if (data.type=="Match"){
             sessionStorage.info=JSON.stringify(event.data);
             self.email=data.playerA.email;
@@ -46,20 +50,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
             self.jugadorA=data.playerA;
             self.jugadorB=data.playerB;
             self.opponentUserName= (data.playerA == self.userName ? data.playerB : data.playerA);
+            self.ws.close();
             self.router.go("tablero");
             
-          }else if(data.type=="Movement"){
-           
-          }else if (data.type=="finEspera") {
-          //Metodos de tablero.js
-          //desbloquearBotones()
-          //vaciarTablero()
-          }else if(data.type=="actualizarTablero"){
-            self.contadorPlayerA=data.contadorPlayerA;
-            self.contadorPlayerB=data.contadorPlayerB;
-            //Metodos de tablero.js
-             //comprobarTableros();
-          }
+         }
         }
         self.ws.onerror=function(event){
           console.log(data);

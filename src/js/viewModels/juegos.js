@@ -46,7 +46,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.joinGame=function(){
         var recurso="http://localhost:8080/joinGame";
         var data ={
-          gameName:self.selectedGame()
+          gameName:self.selectedGame(),
+          uuid : sessionStorage.uuid
         };
 
 

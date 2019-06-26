@@ -23,27 +23,49 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     self.contadorContrincante=ko.observable("0");
 
     self.desbloquearBotones=function(){
-      for (var i = 0; i <3 ; i--) {
-        for (var j = 0; j <3; j--) {
-           $('#'+i+j).removeAttr("disabled");
+      for (var i = 0; i <3 ; i++) {
+        for (var j = 0; j <3; j++) {
+           //$('#'+i+j).removeAttr("disabled");
+           $('#'+i+j).prop('disabled', false);
         }
       }
     }
 
+      function conectarWebSocket() {
+        self.ws= new WebSocket("ws://localhost:8080/gamesws?uuid=" + sessionStorage.uuid);
+       
+        self.ws.onopen=function(){
+          console.log("WebSocket conectado");
 
-    self.onmessage=function(event){
-      var data=JSON.parse(event.data);
-      if (data.type=="finEspera") {
+        }
+        self.ws.onclose=function(){
+          console.log("WebSocket desconectado");
+
+        }
+        self.ws.onmessage=function(event){
+          console.log(event.data);
+          var data=JSON.parse(event.data);
+        if (data.type=="finEspera" ) {
           //Metodos de tablero.js
-        //self.desbloquearBotones();
-        self.vaciarTablero();
+          //self.router.currentState().viewModel.desbloquearBotones();
+          self.desbloquearBotones();
+          self.vaciarTablero();
+          }else if(data.type=="actualizarTablero"){
+            self.contadorPlayerA=data.contadorPlayerA;
+            self.contadorPlayerB=data.contadorPlayerB;
+            //Metodos de tablero.js
+             self.comprobarTableros();
+          }
+        }
+        self.ws.onerror=function(event){
+          console.log(data);
+        }
       }
-
-    }
+  
 
 
     self.dealWithMessage=function(data){
-        console.log('data');
+       // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');   
     }
     // Header Config
     self.headerConfig = ko.observable({'view':[], 'viewModel':null});
@@ -54,7 +76,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     self.handleActivated=function(info){
       self.userName=ko.observable(app.userName);
       self.opponentUserName=ko.observable(app.opponentUserName);
-
 
     }
 
@@ -122,7 +143,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         }
 
     }
-      function vaciarTablero(){
+      self.vaciarTablero= function (){
           for (var i = 0; i < 3; i++) {
             for (var j=0; j <3; j++) {
               $('#'+i+j).html("👻");
@@ -228,7 +249,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     };
 
     self.transitionCompleted = function() {
-      // Implement if needed
+      conectarWebSocket();
     };
   }
 
