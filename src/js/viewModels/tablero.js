@@ -30,10 +30,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         }
       }
     }
+    self.move = function(coordinates) {
+    var p = {
+     type : "Movement",
+     coordinates : coordinates,
+     uuid : sessionStorage.uuid
+    };
+    self.ws.send(JSON.stringify(p));
+    };
 
       function conectarWebSocket() {
         self.ws= new WebSocket("ws://localhost:8080/gamesws?uuid=" + sessionStorage.uuid);
-       
+
         self.ws.onopen=function(){
           console.log("WebSocket conectado");
 
@@ -61,11 +69,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           console.log(data);
         }
       }
-  
+
 
 
     self.dealWithMessage=function(data){
-       // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');   
+       // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
     }
     // Header Config
     self.headerConfig = ko.observable({'view':[], 'viewModel':null});
@@ -84,7 +92,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       for (var i = 0; i < 3; i++) {
            for (var j=0; j <3; j++) {
             $('#valorBoton'+i+j).html(""+self.palabrasJugador[i+j]);
-          }  
+          }
         }
 
     }
@@ -110,7 +118,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         }
 
       }
-      
+
       for (var i = 0; i < 9; i++) {
           $('#palabra'+i).html(""+self.tablero2.tablero2[i]);
       }
@@ -135,7 +143,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
             contador++;
           }
         }
-         
+
         for (var i = 0; i < 9; i++) {
             $('#palabra'+i).html(""+self.tablero2.tablero1[i]);
 
@@ -147,7 +155,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
           for (var i = 0; i < 3; i++) {
             for (var j=0; j <3; j++) {
               $('#'+i+j).html("👻");
-            }  
+            }
           }
     }
 
@@ -156,25 +164,25 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.contenido=app.content;
       if(app.jugadorA==app.userName){
         self.contadorJugador=self.contenido.contadorPlayerA;
-        self.contadorContrincante=self.contenido.contadorPlayerB;      
+        self.contadorContrincante=self.contenido.contadorPlayerB;
       }else{
         self.contadorJugador=self.contenido.contadorPlayerB;
         self.contadorContrincante=self.contenido.contadorPlayerA;
       }
 
-      if(contadorJugador==0){
+      if(self.contadorJugador==0){
         self.vaciarTablero();
       }else{
-        for (var i = 0; i < contadorJugador; i++) {
-          self.voltearPalabra(i);  
+        for (var i = 0; i < self.contadorJugador; i++) {
+          self.voltearPalabra(i);
         }
       }
-      if(contadorContrincante==0){
+      if(self.contadorContrincante==0){
                 // quitar el rojo de los botones.
         self.mostrarAciertosContrincante();
       }else{
-        for (var i = 0; i < contadorContrincante; i++) {
-          self.pintarCelda(i);  
+        for (var i = 0; i < self.contadorContrincante; i++) {
+          self.pintarCelda(i);
         }
       }
     }
@@ -185,30 +193,30 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         if (self.palabrasOrden[contador]==self.palabrasJugador[c]) {
           $('#'+i+j).html(""+self.palabrasJugador[c]);
 
-          
+
         }
         c++;
       }
     }
-    
+
   }
 
   self.pintarCelda=function(contador){
     var c=0;
-   
+
     for (var i = 0; i < 9; i++) {
         if (self.palabrasOrden[contador]==self.palabrasContrincante[c]) {
-          document.getElementById('palabra'+i).style.backgroundColor="#FF0000"; 
+          document.getElementById('palabra'+i).style.backgroundColor="#FF0000";
         }
         c++;
     }
-    
+
   }
 
   self.asignarTableros=function(info){
     self.rellenarPalabrasOrden();
     if(app.jugadorA==app.userName){
-      self.asignarPalabrasTablero1();   
+      self.asignarPalabrasTablero1();
     }else {
         self.asignarPalabrasTablero2();
     }
@@ -235,7 +243,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.coordenada1= self.clickedButton.charAt(0);
       self.coordenada2=self.clickedButton.charAt(1);
       self.coordenadas=[self.coordenada1, self.coordenada2];
-      app.move(self.coordenadas);
+      self.move(self.coordenadas);
 
       return true;
   }

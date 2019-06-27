@@ -18,17 +18,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
         conectarWebSocket();
         self.router.go("juegos");
       }
-      self.move = function(coordinates) {
-      var p = {
-       type : "Movement",
-       coordinates : coordinates, 
-       uuid : sessionStorage.uuid
-      };
-      self.ws.send(JSON.stringify(p));
-      };
+
       function conectarWebSocket() {
         self.ws= new WebSocket("ws://localhost:8080/gamesws");
-       
+
         self.ws.onopen=function(){
           console.log("WebSocket conectado");
 
@@ -52,7 +45,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojmodule-element-utils', 'ojs/ojknockout'
             self.opponentUserName= (data.playerA == self.userName ? data.playerB : data.playerA);
             self.ws.close();
             self.router.go("tablero");
-            
+
          }
         }
         self.ws.onerror=function(event){
