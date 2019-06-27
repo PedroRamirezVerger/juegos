@@ -21,9 +21,9 @@
          <p>Tablero de <!--ko text: userName--><!--/ko--> </p>
 
         <div>
-            <oj-button id='00' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' > <span><oj-bind-text value="[[valorBoton00]]"></oj-bind-text></span></oj-button>
-            <oj-button id='01' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled > <span><oj-bind-text value="[[valorBoton01]]"></oj-bind-text></span></oj-button>
-            <oj-button id='02' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled > <span><oj-bind-text value="[[valorBoton02]]"></oj-bind-text></span></oj-button>
+            <oj-button id='00' on-oj-action='[[buttonClick]]' style='width:150px; height:50px text-align:center'  disabled> <span><oj-bind-text value="[[valorBoton00]]"></oj-bind-text></span></oj-button>
+            <oj-button id='01' on-oj-action='[[buttonClick]]' style='width:150px; height:50px text-align:center' disabled > <span><oj-bind-text value="[[valorBoton01]]"></oj-bind-text></span></oj-button>
+            <oj-button id='02' on-oj-action='[[buttonClick]]' style='width:150px; height:50px text-align:center' disabled > <span><oj-bind-text value="[[valorBoton02]]"></oj-bind-text></span></oj-button>
         </div>
         <div>
 
@@ -36,7 +36,9 @@
             <oj-button id='21' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled > <span><oj-bind-text value="[[valorBoton21]]"></oj-bind-text></span></oj-button>
             <oj-button id='22' on-oj-action='[[buttonClick]]' style='width:150px; height:50px' disabled > <span><oj-bind-text value="[[valorBoton22]]"></oj-bind-text></span></oj-button>
           </div>
-         <p><!--ko text: contadorJugador--><!--/ko-->-<!--ko text: palabraActual --><!--/ko--> -<!--ko text: contadorContrincante--><!--/ko--> </p>
+         <p id="cJugador"> 0 </p>
+         <p id="vPalabra">  </p>
+         <p id="cContrincante"> 0 </p>
         <div>
 
             <div class="oj-hybrid-padding">

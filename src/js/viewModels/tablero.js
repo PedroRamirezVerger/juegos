@@ -19,8 +19,20 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     self.palabraActual=ko.observable("");
     self.palabrasJugador=ko.observableArray([]);
     self.palabrasContrincante=ko.observableArray([]);
-    self.contadorJugador=ko.observable("0");
-    self.contadorContrincante=ko.observable("0");
+    self.contadorJugador=0;
+    self.contadorContrincante=0;
+    self.ganador=ko.observable("");
+
+
+    self.valorBoton0=ko.observable("");
+    self.valorBoton1=ko.observable("");
+    self.valorBoton2=ko.observable("");
+    self.valorBoton3=ko.observable("");
+    self.valorBoton4=ko.observable("");
+    self.valorBoton5=ko.observable("");
+    self.valorBoton6=ko.observable("");
+    self.valorBoton7=ko.observable("");
+    self.valorBoton8=ko.observable("");
 
     self.desbloquearBotones=function(){
       for (var i = 0; i <3 ; i++) {
@@ -56,13 +68,23 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         if (data.type=="finEspera" ) {
           //Metodos de tablero.js
           //self.router.currentState().viewModel.desbloquearBotones();
-          self.desbloquearBotones();
+
           self.vaciarTablero();
+          self.desbloquearBotones();
+          self.actualizarPalabra(0);
           }else if(data.type=="actualizarTablero"){
+            self.content=JSON.parse(data.board.content);
             self.contadorPlayerA=data.contadorPlayerA;
             self.contadorPlayerB=data.contadorPlayerB;
             //Metodos de tablero.js
              self.comprobarTableros();
+          }
+          if(data.type=="Movement"){
+              if(data.winnerName!=null){
+                  self.ganador=data.winnerName;
+                  self.mostrarGanador();
+              }
+
           }
         }
         self.ws.onerror=function(event){
@@ -87,15 +109,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
     }
 
-    self.valorBotones=function(){
 
-      for (var i = 0; i < 3; i++) {
-           for (var j=0; j <3; j++) {
-            $('#valorBoton'+i+j).html(""+self.palabrasJugador[i+j]);
-          }
-        }
-
-    }
 
 
     self.asignarPalabrasTablero1=function(){
@@ -103,9 +117,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.tablero1=self.contenido.tablero[1];
 
       //self.pintarCelda();
-      for (var i = 0; i < 9; i++) {
-          self.palabrasJugador[i]=self.tablero1.tablero1[i];
-      }
+
+    self.palabrasJugador=self.tablero1.tablero1;
+    self.palabrasContrincante=self.contenido.tablero[2].tablero2;
+
 
 
 
@@ -130,15 +145,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         self.contenido=app.content;
         self.tablero1=self.contenido.tablero[2];
 
-        for (var i = 0; i < 9; i++) {
-            self.palabrasJugador[i]=self.tablero1.tablero2[i];
-        }
+
+        self.palabrasJugador=self.tablero1.tablero2;
+        self.palabrasContrincante=self.contenido.tablero[1].tablero1;
+
+
 
 
         self.tablero2=self.contenido.tablero[1];
         var contador=0;
         for (var i = 0; i < 3; i++) {
           for (var j=0; j <3; j++) {
+
             $('#'+i+j).html(""+self.tablero1.tablero2[contador]);
             contador++;
           }
@@ -152,36 +170,43 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
 
     }
       self.vaciarTablero= function (){
-          for (var i = 0; i < 3; i++) {
-            for (var j=0; j <3; j++) {
-              $('#'+i+j).html("👻");
-            }
+           for (var i = 0; i < 3; i++) {
+             for (var j=0; j <3; j++) {
+               $('#'+i+j).html(""+"👻");
+             }
           }
+
     }
 
 
     self.comprobarTableros=function(){
-      self.contenido=app.content;
+      self.contenido=self.content;
       if(app.jugadorA==app.userName){
-        self.contadorJugador=self.contenido.contadorPlayerA;
-        self.contadorContrincante=self.contenido.contadorPlayerB;
+        self.contadorJugador=self.contadorPlayerA;
+        self.contadorContrincante=self.contadorPlayerB;
       }else{
-        self.contadorJugador=self.contenido.contadorPlayerB;
-        self.contadorContrincante=self.contenido.contadorPlayerA;
+        self.contadorJugador=self.contadorPlayerB;
+        self.contadorContrincante=self.contadorPlayerA;
       }
 
       if(self.contadorJugador==0){
-        self.vaciarTablero();
+          self.actualizarPalabra(0);
+          self.actualizarContadorJugador();
+          self.vaciarTablero();
       }else{
         for (var i = 0; i < self.contadorJugador; i++) {
-          self.voltearPalabra(i);
+            self.actualizarPalabra(self.contadorJugador);
+            self.actualizarContadorJugador();
+            self.voltearPalabra(i);
         }
       }
       if(self.contadorContrincante==0){
                 // quitar el rojo de los botones.
-        self.mostrarAciertosContrincante();
+        self.actualizarContadorContrincante();
+        self.despintarCelda();
       }else{
         for (var i = 0; i < self.contadorContrincante; i++) {
+            self.actualizarContadorContrincante();
           self.pintarCelda(i);
         }
       }
@@ -190,10 +215,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     var c=0;
     for (var i = 0; i < 3; i++) {
       for (var j = 0; j < 3; j++) {
-        if (self.palabrasOrden[contador]==self.palabrasJugador[c]) {
+         var palabra1=self.palabrasOrden[contador];
+         var palabra2=self.palabrasJugador[c];
+        if (palabra1==palabra2) {
           $('#'+i+j).html(""+self.palabrasJugador[c]);
-
-
         }
         c++;
       }
@@ -212,6 +237,25 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
     }
 
   }
+  self.despintarCelda=function(){
+    for (var i = 0; i < 9; i++) {
+          document.getElementById('palabra'+i).style.backgroundColor="#FFFFFF";
+    }
+  }
+  self.mostrarGanador=function(){
+
+      alert("el ganador es "+self.ganador);
+
+  }
+  self.actualizarContadorJugador=function(){
+      $('#cJugador').html(""+self.contadorJugador);
+  }
+  self.actualizarContadorContrincante=function(){
+      $('#cContrincante').html(""+self.contadorContrincante);
+  }
+  self.actualizarPalabra=function(i){
+      $('#vPalabra').html(""+self.palabrasOrden[i]);
+  }
 
   self.asignarTableros=function(info){
     self.rellenarPalabrasOrden();
@@ -221,11 +265,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
         self.asignarPalabrasTablero2();
     }
    //self.palabraActual=self.palabrasOrden[0];//////////////////////
-    self.valorBotones();
+
   }
   self.rellenarPalabrasOrden=function(){
     self.contenido=app.content;
-    self.palabrasOrden=self.contenido.tablero[0];
+    self.palabrasOrden=self.contenido.tablero[0].palabras;
   }
     self.connected = function() {
       var info =JSON.parse(sessionStorage.info);
@@ -244,6 +288,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 'ojs/ojmodule-eleme
       self.coordenada2=self.clickedButton.charAt(1);
       self.coordenadas=[self.coordenada1, self.coordenada2];
       self.move(self.coordenadas);
+
 
       return true;
   }
